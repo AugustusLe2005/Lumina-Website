@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Home" xml:space="preserve">
+    <value>ホーム</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="Library" xml:space="preserve">
+    <value>マイライブラリ</value>
+  </data>
+  <data name="CreatePlaylist" xml:space="preserve">
+    <value>プレイリストを作成</value>
+  </data>
+  <data name="LikedSongs" xml:space="preserve">
+    <value>お気に入りの曲</value>
+  </data>
+  <data name="SongTitle" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="Album" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
+  <data name="DateAdded" xml:space="preserve">
+    <value>追加日</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>システム設定</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="LanguageDesc" xml:space="preserve">
+    <value>優先言語を選択してください</value>
+  </data>
+  <data name="ContentTitle" xml:space="preserve">
+    <value>コンテンツ</value>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>自動再生</value>
+  </data>
+  <data name="AutoPlayDesc" xml:space="preserve">
+    <value>似たような曲を自動再生する</value>
+  </data>
+  <data name="HideError" xml:space="preserve">
+    <value>再生できない曲を非表示</value>
+  </data>
+  <data name="HideErrorDesc" xml:space="preserve">
+    <value>エラーのある曲は表示されません</value>
+  </data>
+  <data name="SaveBtn" xml:space="preserve">
+    <value>変更を保存</value>
+  </data>
+  <data name="BackLib" xml:space="preserve">
+    <value>ライブラリに戻る</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>プロフィール</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>プライバシー</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>表示設定</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="UsernameLabel" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>ログイン状態を保持する</value>
+  </data>
+  <data name="SignInBtn" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>ログアウト</value>
+  </data>
+  <data name="Explore" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="Favourite" xml:space="preserve">
+    <value>お気に入り</value>
+  </data>
+  <data name="AddMusic" xml:space="preserve">
+    <value>音楽を追加</value>
+  </data>
+  <data name="SongInformation" xml:space="preserve">
+    <value>曲の情報</value>
+  </data>
+  <data name="Genre" xml:space="preserve">
+    <value>ジャンル</value>
+  </data>
+  <data name="DateOfRelease" xml:space="preserve">
+    <value>リリース年</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Recent" xml:space="preserve">
+    <value>最近の再生</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>曲、アーティストなどを検索</value>
+  </data>
+  <data name="PopularSongs" xml:space="preserve">
+    <value>人気の曲</value>
+  </data>
+  <data name="SongName" xml:space="preserve">
+    <value>曲名</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="Radio" xml:space="preserve">
+    <value>ラジオ</value>
+  </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>ホームに戻る</value>
+  </data>
+  <data name="Playback" xml:space="preserve">
+    <value>再生</value>
+  </data>
+  <data name="Audio8D" xml:space="preserve">
+    <value>8Dオーディオ</value>
+  </data>
+  <data name="AutomaticallyActivate" xml:space="preserve">
+    <value>音楽を聴く際、立体音響効果を自動的に有効にします。</value>
+  </data>
+  <data name="Equalizer" xml:space="preserve">
+    <value>イコライザー</value>
+  </data>
+  <data name="EQDesc" xml:space="preserve">
+    <value>好みの音楽ジャンルに合わせて音質を調整します。</value>
+  </data>
+  <data name="NextUp" xml:space="preserve">
+    <value>次は次へ</value>
+  </data>
+  <data name="BornIn" xml:space="preserve">
+    <value>誕生日</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>ユーザー</value>
+  </data>
+  <data name="MonthlyListeners" xml:space="preserve">
+    <value>月間リスナー数</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>フルネーム</value>
+  </data>
+</root>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gia nhập Lumina 🍒</title>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		:root {
+			--primary: #ff4d6d;
+			--bg: #0f0c29;
+			--input-bg: rgba(255, 255, 255, 0.04);
+		}
+
+		body {
+			margin: 0;
+			background-color: var(--bg);
+			font-family: 'Plus Jakarta Sans', sans-serif;
+			overflow-x: hidden;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+			box-sizing: border-box;
+		}
+
+		.background {
+			position: fixed;
+			width: 100vw;
+			height: 100vh;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			filter: blur(60px);
+		}
+
+		.shape {
+			position: absolute;
+			border-radius: 50%;
+			animation: floatBackground 15s infinite alternate ease-in-out;
+		}
+
+		.shape-1 {
+			width: 500px;
+			height: 500px;
+			background: #ff4d6d;
+			top: -10%;
+			left: -10%;
+			opacity: 0.5;
+		}
+
+		.shape-2 {
+			width: 400px;
+			height: 400px;
+			background: #302b63;
+			bottom: -5%;
+			right: -5%;
+			animation-delay: -5s;
+		}
+
+		.shape-3 {
+			width: 300px;
+			height: 300px;
+			background: #4e54c8;
+			top: 20%;
+			right: 15%;
+			opacity: 0.3;
+			animation-duration: 20s;
+		}
+
+		@keyframes floatBackground {
+			0% { transform: translate(0, 0) scale(1); }
+			100% { transform: translate(80px, 40px) scale(1.1); }
+		}
+
+		.glass-panel {
+			background: rgba(23, 23, 43, 0.85);
+			backdrop-filter: blur(25px);
+			-webkit-backdrop-filter: blur(25px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			padding: 40px;
+			border-radius: 30px;
+			width: 100%;
+			max-width: 440px;
+			color: white;
+			text-align: center;
+			box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+			position: relative;
+			animation: panelFadeIn 0.8s ease-out;
+			box-sizing: border-box;
+		}
+
+		@keyframes panelFadeIn {
+			from { opacity: 0; transform: translateY(30px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.header { margin-bottom: 25px; }
+
+		.logo {
+			font-size: 3.5rem;
+			margin-bottom: 10px;
+			display: inline-block;
+			animation: cherryPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+			text-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+		}
+
+		@keyframes cherryPop {
+			0% { opacity: 0; transform: scale(0.3) translateY(20px); }
+			50% { transform: scale(1.1); }
+			70% { transform: scale(0.95); }
+			100% { opacity: 1; transform: scale(1) translateY(0); }
+		}
+
+		h2 {
+			margin: 0;
+			font-weight: 700;
+			font-size: 1.6rem;
+			letter-spacing: -0.5px;
+		}
+
+		.subtitle {
+			color: #8ea0b3;
+			font-size: 0.88rem;
+			margin: 8px 0 25px 0;
+		}
+
+		.input-group {
+			margin-bottom: 18px;
+			text-align: left;
+		}
+
+		.input-group label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 8px;
+			color: #8e8ea0;
+			font-size: 0.8rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			padding-left: 2px;
+		}
+
+		.input-group label .pwd-hint {
+			text-transform: none;
+			font-weight: 500;
+			color: rgba(255, 77, 109, 0.8);
+			font-size: 0.78rem;
+			letter-spacing: 0;
+		}
+
+		.input-group input {
+			width: 100%;
+			padding: 14px 16px;
+			background: var(--input-bg);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 12px;
+			color: white;
+			outline: none;
+			box-sizing: border-box;
+			font-family: 'Plus Jakarta Sans', sans-serif;
+			font-size: 0.95rem;
+			transition: 0.3s;
+		}
+
+		.input-group input:focus {
+			border-color: var(--primary);
+			background: rgba(255, 255, 255, 0.08);
+			box-shadow: 0 0 15px rgba(255, 77, 109, 0.15);
+		}
+
+		.terms-wrapper {
+			display: flex;
+			align-items: flex-start;
+			gap: 12px;
+			margin: 22px 0 25px 0;
+			text-align: left;
+		}
+
+		.terms-checkbox-container {
+			position: relative;
+			width: 18px;
+			height: 18px;
+			flex-shrink: 0;
+			margin-top: 2px;
+		}
+
+		.terms-checkbox-container input {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 18px;
+			height: 18px;
+			opacity: 0;
+			cursor: pointer;
+			margin: 0;
+			z-index: 2;
+		}
+
+		.checkmark {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 18px;
+			width: 18px;
+			border: 2px solid rgba(255, 255, 255, 0.3);
+			border-radius: 5px;
+			transition: 0.2s;
+			box-sizing: border-box;
+			z-index: 1;
+			pointer-events: none;
+		}
+
+		.terms-checkbox-container input:checked ~ .checkmark {
+			background-color: var(--primary);
+			border-color: var(--primary);
+		}
+
+		.checkmark:after {
+			content: "";
+			position: absolute;
+			display: none;
+			left: 4px;
+			top: 1px;
+			width: 4px;
+			height: 8px;
+			border: solid white;
+			border-width: 0 2px 2px 0;
+			transform: rotate(45deg);
+		}
+
+		.terms-checkbox-container input:checked ~ .checkmark:after {
+			display: block;
+		}
+
+		.terms-text {
+			font-size: 0.85rem;
+			color: #8ea0b3;
+			line-height: 1.4;
+			user-select: none;
+			cursor: pointer;
+		}
+
+		.terms-text a {
+			color: var(--primary);
+			text-decoration: none;
+			font-weight: 600;
+		}
+
+		.submit-btn {
+			width: 100%;
+			padding: 14px;
+			background: var(--primary);
+			border: none;
+			border-radius: 50px;
+			color: white;
+			font-weight: 700;
+			font-size: 0.95rem;
+			cursor: pointer;
+			font-family: 'Plus Jakarta Sans', sans-serif;
+			transition: 0.3s;
+		}
+
+		.submit-btn:hover {
+			transform: scale(1.02);
+			box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+		}
+
+		.divider {
+			display: flex;
+			align-items: center;
+			margin: 25px 0;
+			color: #4b4b61;
+			font-size: 0.8rem;
+		}
+
+		.divider::before, .divider::after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: rgba(255,255,255,0.08);
+		}
+
+		.divider span { padding: 0 10px; }
+
+		#success-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(10, 9, 22, 0.85);
+			backdrop-filter: blur(20px);
+			-webkit-backdrop-filter: blur(20px);
+			display: none;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000;
+		}
+
+		.success-box {
+			text-align: center;
+			background: rgba(23, 23, 43, 0.9);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			padding: 50px 40px;
+			border-radius: 30px;
+			max-width: 380px;
+			width: 90%;
+			color: white;
+			box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+			animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		}
+
+		.success-box i {
+			font-size: 64px;
+			color: #2ecc71;
+			margin-bottom: 20px;
+		}
+
+		@keyframes bounceIn {
+			0% { transform: scale(0.6); opacity: 0; }
+			100% { transform: scale(1); opacity: 1; }
+		}
+	</style>
+</head>
+<body>
+
+	<div class="background">
+		<div class="shape shape-1"></div>
+		<div class="shape shape-2"></div>
+		<div class="shape shape-3"></div>
+	</div>
+
+	<div class="glass-panel">
+		<!-- Nút Quay lại Trang chủ -->
+		<div style="text-align: left; margin-bottom: 15px;">
+			<a href="/index.html" style="color: #8ea0b3; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+				<i class="fa-solid fa-arrow-left"></i> Trang chủ
+			</a>
+		</div>
+
+		<div class="header">
+			<div class="logo">🍒</div>
+			<h2>Gia nhập Lumina</h2>
+			<p class="subtitle">Đăng ký để khám phá không gian âm nhạc riêng của bạn.</p>
+		</div>
+
+		<form id="signupForm">
+			<div class="input-group">
+				<label for="fullName">Họ và tên</label>
+				<input type="text" id="fullName" placeholder="Nhập họ tên của bạn" required autofocus>
+			</div>
+
+			<div class="input-group">
+				<label for="username">Tên đăng nhập</label>
+				<input type="text" id="username" placeholder="Tên tài khoản hoặc email" required>
+			</div>
+
+			<div class="input-group">
+				<label for="pass">
+					<span>Mật khẩu</span>
+					<span class="pwd-hint">(Ít nhất 6 ký tự)</span>
+				</label>
+				<input type="password" id="pass" placeholder="••••••••" required>
+			</div>
+
+			<div class="input-group">
+				<label for="confirm_pass">Xác nhận mật khẩu</label>
+				<input type="password" id="confirm_pass" placeholder="••••••••" required />
+			</div>
+
+			<div class="terms-wrapper">
+				<div class="terms-checkbox-container">
+					<input type="checkbox" id="terms" required>
+					<span class="checkmark"></span>
+				</div>
+				<label class="terms-text" for="terms">
+					Tôi đồng ý với các <a href="#">Điều khoản</a> và <a href="#">Chính sách</a> bảo mật của Lumina Cherry.
+				</label>
+			</div>
+
+			<button type="submit" class="submit-btn">Đăng ký thành viên</button>
+		</form>
+
+		<div class="divider"><span>Hoặc</span></div>
+
+		<p style="font-size: 0.88rem; color: #8e8ea0; margin: 0;">
+			Đã có tài khoản? <a href="/login.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">Đăng nhập ngay</a>
+		</p>
+	</div>
+
+	<!-- OVERLAY THÀNH CÔNG -->
+	<div id="success-overlay">
+		<div class="success-box">
+			<i class="fa-solid fa-circle-check"></i>
+			<h3>Đăng ký thành công!</h3>
+			<p>Chào mừng bạn đã gia nhập đại gia đình Lumina. Hãy bắt đầu hành trình âm nhạc ngay hôm nay.</p>
+			<button class="submit-btn" onclick="window.location.href='/login.html'">Bắt đầu Đăng nhập</button>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#signupForm').on('submit', function (e) {
+				e.preventDefault();
+
+				const p1 = $('#pass').val();
+				const p2 = $('#confirm_pass').val();
+
+				if (p1 !== p2) {
+					alert("⚠️ Mật khẩu xác nhận không khớp!");
+					return;
+				}
+
+				if (p1.length < 6) {
+					alert("⚠️ Mật khẩu phải có ít nhất 6 ký tự!");
+					return;
+				}
+
+				// Gọi Web API Đăng ký về Backend
+				$.ajax({
+					url: '/api/auth/register', // Hoặc route API signup của bạn
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						fullName: $('#fullName').val(),
+						username: $('#username').val(),
+						password: p1
+					}),
+					success: function (res) {
+						$('#success-overlay').css('display', 'flex');
+					},
+					error: function (xhr) {
+						alert("❌ Đăng ký thất bại! " + (xhr.responseJSON?.message || ""));
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

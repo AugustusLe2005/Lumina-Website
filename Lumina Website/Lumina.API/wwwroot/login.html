@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Login - Professional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --bg: #0f0c29;
+            --input-bg: rgba(255, 255, 255, 0.04);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(60px);
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatBackground 15s infinite alternate ease-in-out;
+        }
+
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            background: #ff4d6d;
+            top: -10%;
+            left: -10%;
+            opacity: 0.5;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: #302b63;
+            bottom: -5%;
+            right: -5%;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 300px;
+            height: 300px;
+            background: #4e54c8;
+            top: 20%;
+            right: 15%;
+            opacity: 0.3;
+            animation-duration: 20s;
+        }
+
+        @keyframes floatBackground {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 40px) scale(1.1); }
+        }
+
+        .glass-panel {
+            background: rgba(23, 23, 43, 0.85);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 35px 40px;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 400px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            position: relative;
+            animation: panelFadeIn 0.8s ease-out;
+        }
+
+        @keyframes panelFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header { margin-bottom: 20px; }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: cherryPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+            text-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+        }
+
+        @keyframes cherryPop {
+            0% { opacity: 0; transform: scale(0.3) translateY(20px); }
+            50% { transform: scale(1.1); }
+            70% { transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        h2 { margin: 0; font-weight: 600; }
+        .subtitle { color: #8ea0b3; font-size: 0.85rem; margin-bottom: 20px; }
+
+        .input-group { margin-bottom: 16px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; color: #8e8ea0; font-size: 0.8rem; }
+        .input-group input {
+            width: 100%;
+            padding: 13px 16px;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+        .input-group input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+        }
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Divider giữa Form và Social Login */
+        .social-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 22px 0 18px 0;
+            color: #6c7293;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .social-divider::before, .social-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .social-divider span {
+            padding: 0 12px;
+        }
+
+        /* Khung Nút Social Media Login */
+        .social-login-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .social-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px 0;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .social-btn.google:hover { color: #ea4335; box-shadow: 0 5px 15px rgba(234, 67, 53, 0.2); }
+        .social-btn.x-twitter:hover { color: #ffffff; box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2); }
+        .social-btn.github:hover { color: #a371f7; box-shadow: 0 5px 15px rgba(163, 113, 247, 0.2); }
+
+        #error-msg {
+            color: #ff4d6d;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="glass-panel">
+        <!-- Nút Quay lại Trang chủ -->
+        <div style="text-align: left; margin-bottom: 15px;">
+            <a href="index.html" style="color: #8ea0b3; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-arrow-left"></i> Trang chủ
+            </a>
+        </div>
+
+        <div class="header">
+            <div class="logo">🍒</div>
+            <h2>Welcome back</h2>
+            <p class="subtitle">Please enter your details to sign in.</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label>Email / Username</label>
+                <input type="text" id="username" placeholder="name@example.com" required autofocus autocomplete="username">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+
+            <div id="error-msg">Tài khoản hoặc mật khẩu không chính xác!</div>
+
+            <button type="submit" id="btnSubmit" class="submit-btn">Sign in</button>
+        </form>
+
+        <!-- Khung Đăng nhập nhanh bằng Mạng Xã Hội -->
+        <div class="social-divider">
+            <span>Hoặc đăng nhập với</span>
+        </div>
+
+        <div class="social-login-grid">
+            <a href="javascript:void(0)" onclick="loginSocial('Google')" class="social-btn google" title="Đăng nhập bằng Google">
+                <i class="fa-brands fa-google"></i>
+            </a>
+            <a href="javascript:void(0)" onclick="loginSocial('X')" class="social-btn x-twitter" title="Đăng nhập bằng X (Twitter)">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="javascript:void(0)" onclick="loginSocial('GitHub')" class="social-btn github" title="Đăng nhập bằng GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+        </div>
+
+        <p style="margin-top: 25px; font-size: 0.85rem; color: #8e8ea0;">
+            Don't have an account? <a href="signup.html" style="color: var(--primary); text-decoration: none;">Sign up</a>
+        </p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Gọi API OAuth2 Backend
+        function loginSocial(provider) {
+            let actualProvider = provider;
+            if (provider === 'X') {
+                actualProvider = 'Twitter';
+            }
+            window.location.href = `/api/account/external-login?provider=${actualProvider}`;
+        }
+
+        $(document).ready(function () {$('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const username = $('#username').val().trim();
+                const password = $('#password').val().trim();
+
+                if (!username || !password) {
+                    $('#error-msg').text("Vui lòng điền đầy đủ thông tin!").fadeIn();
+                    return;
+                }
+
+                $('#error-msg').hide();
+                const $btn =$('#btnSubmit');
+                $btn.prop('disabled', true).text('Signing in...');
+
+                $.ajax({
+                    url: '/api/account/login',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        Username: username,
+                        Password: password
+                    }),
+                    success: function (res) {
+                        const isSuccess = res.success !== undefined ? res.success : true;
+
+                        if (isSuccess) {
+                            const authToken = res.token || res.accessToken || res.jwtToken || 'logged_in_token';
+                            let userObj = res.user || res.data || res.account;
+                            
+                            if (typeof userObj !== 'object' || !userObj) {
+                                userObj = { username: username, fullName: username };
+                            } else if (!userObj.fullName && !userObj.FullName && !userObj.username) {
+                                userObj.fullName = username;
+                            }
+
+                            localStorage.setItem('user', JSON.stringify(userObj));
+                            localStorage.setItem('currentUser', JSON.stringify(userObj));
+                            localStorage.setItem('token', authToken);
+                            localStorage.setItem('jwt_token', authToken);
+
+                            window.location.href = 'index.html';
+                        } else {
+                            $('#error-msg').text(res.message || "Đăng nhập thất bại!").fadeIn();
+                            $btn.prop('disabled', false).text('Sign in');
+                        }
+                    },
+                    error: function (xhr) {
+                        let errorText = "Tài khoản hoặc mật khẩu không chính xác!";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorText = xhr.responseJSON.message;
+                        }
+                        
+                        $('#error-msg').text(errorText).fadeIn();
+                        $btn.prop('disabled', false).text('Sign in');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
