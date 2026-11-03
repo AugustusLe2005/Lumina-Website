@@ -1,5 +1,7 @@
 .env
+appsettings.Development.json
 bin/
 obj/
 .vs/
 .vscode/
+Uploads/

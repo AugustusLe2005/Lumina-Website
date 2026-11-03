@@ -1,75 +1,164 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Text;
+using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Text.Json;
 using Lumina.API.Models;
-using Lumina.API;
-using Lumina.API.Services;
+
+// =========================================================================
+// HÀM TỰ ĐỌC FILE .ENV VÀ NẠP VÀO ENVIRONMENT VARIABLES (SIÊU CHUẨN DỄ DÙNG)
+// =========================================================================
+var envFilePath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+if (File.Exists(envFilePath))
+{
+    foreach (var line in File.ReadAllLines(envFilePath))
+    {
+        var parts = line.Split('=', 2, StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 2)
+        {
+            Environment.SetEnvironmentVariable(parts[0].Trim(), parts[1].Trim());
+        }
+    }
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Đăng ký HttpClient cho SpotifyService
-builder.Services.AddHttpClient<SpotifyService>();
-builder.Services.AddHttpClient();
-builder.Services.AddSingleton<MusicBrainzService>();
+// Lấy giá trị trực tiếp từ Environment Variables
+string GetEnv(string key, string defaultValue = "") 
+    => Environment.GetEnvironmentVariable(key) ?? builder.Configuration[key] ?? defaultValue;
 
-// 1. Đăng ký DbContext kết nối SQL Server
+// =========================================================================
+// 1. CẤU HÌNH DATABASE
+// =========================================================================
+var connectionString = GetEnv("DefaultConnection", 
+    "Server=(localdb)\\MSSQLLocalDB;Database=WebMusicDB;Trusted_Connection=True;TrustServerCertificate=True;");
+
 builder.Services.AddDbContext<LuminaModelContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
-// 2. Dịch vụ Controller API & Cấu hình JSON chuẩn camelCase cho SPA Frontend
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    });
+// =========================================================================
+// 2. CẤU HÌNH AUTHENTICATION (ĐỌC TRỰC TIẾP TỪ .ENV)
+// =========================================================================
+var jwtSecretKey = GetEnv("JWT_KEY", "LuminaCherrySecretKey2026SuperSecureKeyKey!");
+var key = Encoding.ASCII.GetBytes(jwtSecretKey);
 
-// 3. Cấu hình Authentication Middleware (Cookies cho Social OAuth2 + JWT Bearer)
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddCookie()
-.AddGoogle(options =>
+.AddJwtBearer(options =>
 {
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
 })
-.AddGitHub(options =>
+// 1. GOOGLE OAUTH
+.AddGoogle("Google", options =>
 {
-    options.ClientId = builder.Configuration["Authentication:GitHub:ClientId"]!;
-    options.ClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"]!;
+    options.ClientId = GetEnv("GOOGLE_CLIENT_ID", "dummy-google-client-id");
+    options.ClientSecret = GetEnv("GOOGLE_CLIENT_SECRET", "dummy-google-client-secret");
 })
-.AddTwitter(options =>
+// 2. X / TWITTER OAUTH
+.AddTwitter("Twitter", options =>
 {
-    options.ClientId = builder.Configuration["Authentication:X:ClientId"]!;
-    options.ClientSecret = builder.Configuration["Authentication:X:ClientSecret"]!;
+    options.ClientId = GetEnv("X_CLIENT_ID", "dummy-x-client-id");
+    options.ClientSecret = GetEnv("X_CLIENT_SECRET", "dummy-x-client-secret");
+})
+// 3. GITHUB OAUTH
+.AddGitHub("GitHub", options =>
+{
+    options.ClientId = GetEnv("GITHUB_CLIENT_ID", "dummy-github-client-id");
+    options.ClientSecret = GetEnv("GITHUB_CLIENT_SECRET", "dummy-github-client-secret");
 });
 
-// 4. Cấu hình CORS cho SPA Frontend Lumina
-builder.Services.AddCors(options =>
+// =========================================================================
+// 3. CẤU HÌNH AUTHORIZATION POLICIES
+// =========================================================================
+builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AllowSPA", policy =>
+    options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("RequireArtist", policy => policy.RequireRole("Artist", "Admin"));
+    options.AddPolicy("RequireUser", policy => policy.RequireRole("User", "Artist", "Admin"));
+});
+
+// =========================================================================
+// 4. CẤU HÌNH RATE LIMITING (Bảo vệ GPU / MI50)
+// =========================================================================
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.AddPolicy("AiChatPolicy", httpContext =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        var username = httpContext.User.Identity?.Name ?? httpContext.Connection.RemoteIpAddress?.ToString();
+        return RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: username,
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10,
+                Window = TimeSpan.FromMinutes(1),
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 2
+            });
     });
 });
+
+// =========================================================================
+// 5. CẤU HÌNH HTTP CLIENT CHO OLLAMA API
+// =========================================================================
+builder.Services.AddHttpClient("OllamaClient", client =>
+{
+    var ollamaUrl = GetEnv("OLLAMA_URL", "http://192.168.1.100:11434/");
+    client.BaseAddress = new Uri(ollamaUrl);
+    client.Timeout = TimeSpan.FromSeconds(60);
+});
+
+// =========================================================================
+// 6. CẤU HÌNH CORS, CONTROLLERS & SWAGGER
+// =========================================================================
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("LuminaCorsPolicy", policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors("AllowSPA");
-app.UseDefaultFiles();
-app.UseStaticFiles();
+// =========================================================================
+// 7. MIDDLEWARE PIPELINE
+// =========================================================================
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseRouting();
 
-// Bật Middleware Xác thực & Phân quyền (Đặt đúng thứ tự trước MapControllers)
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.UseCors("LuminaCorsPolicy");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter();
 
 app.MapControllers();
 
